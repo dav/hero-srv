@@ -69,7 +69,7 @@ post '/create_user.json' do
   rescue Exception => ex
     response[:error] = ex.to_s
   end
-  response.merge(p).to_json
+  response.merge(params).to_json
 end
 
 get '/users.json' do
