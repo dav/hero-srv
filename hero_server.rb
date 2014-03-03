@@ -18,7 +18,7 @@ configure :development do
 end
 
 configure :production do
-    DataMapper.setup(:default, ENV['HEROKU_POSTGRESQL_RED_URL'])
+    DataMapper.setup(:default, ENV['HEROKU_POSTGRESQL_GRAY_URL'])
 end
 
 #################
