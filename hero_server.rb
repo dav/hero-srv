@@ -52,19 +52,17 @@ end
 
 post '/create_user.json' do
   content_type :json
-  data = request.body.read
-  p = JSON.parse(data)
   
-  user_email = p['email']
+  user_email = params['email']
   hero_email = 'dav+'+(user_email.gsub(/@/,'-at-'))+'@akuaku.org'
-  password = 'G#$L#$J#@$G#23' #TODO generate random
+  coinbase_password = 'G#$L#$J#@$G#23' #TODO generate random
   
   response = {}
   begin
     hero_user = User.create :email => user_email
     coinbase = Coinbase::Client.new(ENV['COINBASE_API_KEY'], ENV['COINBASE_API_SECRET'])
-    cb_response = coinbase.create_user hero_email, password
-    hero_user.password = password
+    cb_response = coinbase.create_user hero_email, coinbase_password
+    hero_user.password = coinbase_password
     hero_user.receive_address = cb_response.receive_address
     hero_user.save
     response.merge!({:cb_user => cb_response.user.to_s, :receive_address => hero_user.receive_address, :hero_email => hero_user.email})
